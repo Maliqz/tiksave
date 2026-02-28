@@ -26,14 +26,16 @@ async function downloadVideo() {
     const data = await response.json();
 
     result.innerHTML = `
-      <video controls src="${data.video}"></video>
+      <video controls width="100%">
+        <source src="${data.video}">
+      </video>
 
-      <a href="${data.video}" download class="download-btn">
+      <a href="${data.video}" download>
         <button>Download Without Watermark</button>
       </a>
     `;
 
-  } catch (error) {
+  } catch {
     result.innerHTML = "Failed to download video";
   }
 }
