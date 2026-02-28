@@ -7,14 +7,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// TEST SERVER
 app.get("/", (req, res) => {
-  res.send("Server TikTok Downloader aktif 🚀");
+  res.send("TikSave API Running 🚀");
 });
 
-// API DOWNLOAD
 app.post("/download", async (req, res) => {
   const { url } = req.body;
+
+  if (!url) {
+    return res.status(400).json({
+      error: "URL tidak ada"
+    });
+  }
 
   try {
     const response = await axios.get(
@@ -25,15 +29,16 @@ app.post("/download", async (req, res) => {
       video: response.data.data.play
     });
 
-  } catch (error) {
+  } catch (err) {
     res.status(500).json({
       error: "Gagal mengambil video"
     });
   }
 });
 
+// ✅ WAJIB untuk Railway
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on ${PORT}`);
 });
