@@ -13,7 +13,7 @@ async function downloadVideo() {
   try {
 
     const response = await fetch(
-      "http://localhost:3000/download",
+      "https://tiksave-production.up.railway.app/download",
       {
         method: "POST",
         headers: {
@@ -26,16 +26,14 @@ async function downloadVideo() {
     const data = await response.json();
 
     result.innerHTML = `
-      <video controls>
-        <source src="${data.video}">
-      </video>
+      <video controls src="${data.video}"></video>
 
       <a href="${data.video}" download class="download-btn">
         <button>Download Without Watermark</button>
       </a>
     `;
 
-  } catch {
+  } catch (error) {
     result.innerHTML = "Failed to download video";
   }
 }
