@@ -36,9 +36,8 @@ app.post("/download", async (req, res) => {
   }
 });
 
-// ✅ WAJIB untuk Railway
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server running on ${PORT}`);
+  console.log("TikSave running on port " + PORT);
 });
