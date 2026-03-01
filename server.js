@@ -1,33 +1,38 @@
 const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
-const path = require("path");
 
 const app = express();
 
+// IMPORTANT FOR RAILWAY PORT
+const PORT = process.env.PORT || 3000;
+
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-// ✅ tampilkan frontend
-app.use(express.static(__dirname));
+// ✅ INI YANG KAMU TANYA
+// supaya index.html kebuka otomatis
+app.use(express.static("public"));
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+
+// TEST API
+app.get("/api", (req, res) => {
+  res.send("TikSave API Running 🚀");
 });
 
-// ✅ API DOWNLOAD
-app.post("/download", async (req, res) => {
 
+// DOWNLOAD API
+app.post("/download", async (req, res) => {
   const { url } = req.body;
 
   if (!url) {
     return res.status(400).json({
-      error: "URL tidak ada"
+      error: "URL tidak ditemukan"
     });
   }
 
   try {
-
     const response = await axios.get(
       `https://tikwm.com/api/?url=${url}`
     );
@@ -36,17 +41,17 @@ app.post("/download", async (req, res) => {
       video: response.data.data.play
     });
 
-  } catch (err) {
+  } catch (error) {
+    console.log(error.message);
+
     res.status(500).json({
       error: "Gagal mengambil video"
     });
   }
-
 });
 
-// ✅ PORT RAILWAY
-const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, "0.0.0.0", () => {
-  console.log("TikSave running on port " + PORT);
+// START SERVER
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
