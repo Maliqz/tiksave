@@ -6,7 +6,6 @@ button.addEventListener("click", downloadVideo);
 
 async function downloadVideo() {
   const url = input.value.trim();
-
   if (!url) {
     alert("Masukkan link TikTok!");
     return;
@@ -17,10 +16,8 @@ async function downloadVideo() {
   try {
     const res = await fetch("/download", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ url }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ url })
     });
 
     const data = await res.json();
@@ -35,7 +32,7 @@ async function downloadVideo() {
         <source src="${data.video}" type="video/mp4">
       </video>
       <br><br>
-      <a href="${data.video}" download>
+      <a href="/download-video?url=${encodeURIComponent(data.video)}">
         <button>Download Video</button>
       </a>
     `;
