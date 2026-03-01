@@ -12,16 +12,13 @@ async function downloadVideo() {
 
   try {
 
-    const response = await fetch(
-      "https://tiksave-production.up.railway.app/download",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ url })
-      }
-    );
+    const response = await fetch("/download", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ url })
+    });
 
     const data = await response.json();
 
@@ -35,7 +32,7 @@ async function downloadVideo() {
       </a>
     `;
 
-  } catch {
+  } catch (err) {
     result.innerHTML = "Failed to download video";
   }
 }
