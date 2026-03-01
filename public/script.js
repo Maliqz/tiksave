@@ -15,7 +15,7 @@ async function downloadVideo() {
   result.innerHTML = "<p>Loading...</p>";
 
   try {
-    const res = await fetch("/api/tiktok", {
+    const res = await fetch("/download", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,7 +31,7 @@ async function downloadVideo() {
     }
 
     result.innerHTML = `
-      <video controls width="300">
+      <video controls>
         <source src="${data.video}" type="video/mp4">
       </video>
       <br><br>

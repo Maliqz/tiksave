@@ -38,8 +38,9 @@ app.post("/download", async (req, res) => {
     );
 
     res.json({
-      video: response.data.data.play
-    });
+  status: true,
+  video: response.data.data.play
+});
 
   } catch (error) {
     console.log(error.message);
